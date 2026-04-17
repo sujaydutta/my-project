@@ -89,7 +89,8 @@ Add these secrets to your GitHub repository:
 
 1. `DOCKERHUB_USERNAME` - Your Docker Hub username
 2. `DOCKERHUB_TOKEN` - Your Docker Hub access token (not password)
-3. `RENDER_DEPLOY_HOOK_URL` - Your Render service deploy hook URL
+3. `RENDER_API_KEY` - Your Render API key
+4. `RENDER_SERVICE_ID` - Your Render service ID (e.g. `srv-XXXXXXXXXX`)
 
 ### Creating a Docker Hub Access Token
 
@@ -102,15 +103,18 @@ Add these secrets to your GitHub repository:
 
 1. **Create Render Account**: Sign up at [Render.com](https://render.com)
 2. **Create a Web Service**: Click "New" → "Web Service"
-3. **Connect Repository**: Select your GitHub repository
-4. **Configure the service**:
+3. **Configure the service**:
    - Environment: **Docker**
-   - Branch: `main`
    - Port: `8080`
    - Auto-Deploy: **No** (deployments are triggered by GitHub Actions)
-5. **Get the Deploy Hook URL**:
-   - Go to your service → Settings → Build & Deploy → Deploy Hook
-   - Copy the URL and add it as `RENDER_DEPLOY_HOOK_URL` in your GitHub repository secrets
+4. **Get your Render API Key**:
+   - Go to Account Settings → API Keys → Create API Key
+   - Add it as `RENDER_API_KEY` in your GitHub repository secrets
+5. **Get your Service ID**:
+   - Your service URL contains it: `https://dashboard.render.com/web/srv-XXXXXXXXXX`
+   - Add the `srv-XXXXXXXXXX` value as `RENDER_SERVICE_ID` in your GitHub repository secrets
+
+GitHub Actions will call the Render API directly to deploy the pre-built Docker image from Docker Hub, ensuring the exact same image that was built and tested is what runs in production.
 
 ### Creating the Docker Hub Repository
 
