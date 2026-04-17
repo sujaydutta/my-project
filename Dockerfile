@@ -1,21 +1,25 @@
 # Use the official AWS Corretto 21 image as the base image
 FROM amazoncorretto:21
 
+# Install Maven
+RUN yum update -y && \
+    yum install -y maven && \
+    yum clean all
+
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven wrapper and pom.xml to leverage Docker layer caching
-COPY mvnw pom.xml ./
-COPY .mvn .mvn
+# Copy the pom.xml first to leverage Docker layer caching for dependencies
+COPY pom.xml .
 
 # Download dependencies (this layer will be cached if pom.xml hasn't changed)
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 
 # Copy the source code
 COPY src ./src
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Expose the port the app runs on
 EXPOSE 8080
