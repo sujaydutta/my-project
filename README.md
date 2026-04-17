@@ -56,7 +56,7 @@ src/
 
 ## Docker
 
-The application uses AWS Corretto as the base Java image with Maven installed for reliable builds.
+The application uses a multi-stage Docker build with Maven for building and AWS Corretto for runtime.
 
 ### Building the Docker Image Locally
 

@@ -1,10 +1,5 @@
-# Use the official AWS Corretto 21 image as the base image
-FROM amazoncorretto:21
-
-# Install Maven
-RUN yum update -y && \
-    yum install -y maven && \
-    yum clean all
+# Build stage
+FROM maven:3.9.6-amazoncorretto-21 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -21,8 +16,17 @@ COPY src ./src
 # Build the application
 RUN mvn clean package -DskipTests
 
+# Runtime stage
+FROM amazoncorretto:21
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the built JAR from the build stage
+COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar .
+
 # Expose the port the app runs on
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
