@@ -1,4 +1,4 @@
-name: Build and Deploy Docker Image
+name: Build and Deploy
 
 on:
   push:
@@ -60,3 +60,13 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+
+  deploy-to-render:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Deploy to Render
+      run: |
+        curl --fail-with-body -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
