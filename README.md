@@ -103,18 +103,19 @@ Add these secrets to your GitHub repository:
 
 1. **Create Render Account**: Sign up at [Render.com](https://render.com)
 2. **Create a Web Service**: Click "New" → "Web Service"
-3. **Configure the service**:
-   - Environment: **Docker**
+3. **Select "Deploy an existing image from a registry"**
+4. **Set the image URL**: `docker.io/<your-dockerhub-username>/hello-world-app:latest`
+5. **Configure the service**:
    - Port: `8080`
    - Auto-Deploy: **No** (deployments are triggered by GitHub Actions)
-4. **Get your Render API Key**:
+6. **Get your Render API Key**:
    - Go to Account Settings → API Keys → Create API Key
    - Add it as `RENDER_API_KEY` in your GitHub repository secrets
-5. **Get your Service ID**:
+7. **Get your Service ID**:
    - Your service URL contains it: `https://dashboard.render.com/web/srv-XXXXXXXXXX`
    - Add the `srv-XXXXXXXXXX` value as `RENDER_SERVICE_ID` in your GitHub repository secrets
 
-GitHub Actions will call the Render API directly to deploy the pre-built Docker image from Docker Hub, ensuring the exact same image that was built and tested is what runs in production.
+GitHub Actions builds the Docker image, pushes it to Docker Hub, then calls the Render API to deploy that exact image — ensuring what was built and tested is what runs in production.
 
 ### Creating the Docker Hub Repository
 
