@@ -69,4 +69,7 @@ jobs:
     steps:
     - name: Deploy to Render
       run: |
-        curl --fail-with-body -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+        curl --fail-with-body -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{"imageUrl": "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/hello-world-app:latest"}'
