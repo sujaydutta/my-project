@@ -8,6 +8,6 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello World";
+        return "Hello World!! Showcasing end to end build of docker image, push to Docker Hub and Deployment to Render";
     }
 }
