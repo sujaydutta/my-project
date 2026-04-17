@@ -56,6 +56,8 @@ src/
 
 ## Docker
 
+The application uses AWS Corretto as the base Java image for better reliability and performance.
+
 ### Building the Docker Image Locally
 
 ```bash
