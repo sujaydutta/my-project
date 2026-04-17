@@ -96,8 +96,18 @@ To enable Docker Hub deployment, add these secrets to your GitHub repository:
 
 1. Go to [Docker Hub](https://hub.docker.com/)
 2. Navigate to Account Settings → Security
-3. Generate a new Access Token
+3. Generate a new Access Token with **Read, Write, Delete** permissions
 4. Add the token as `DOCKERHUB_TOKEN` in your GitHub repository secrets
+
+### Creating the Docker Hub Repository
+
+Before the first build, create a repository on Docker Hub:
+
+1. Go to [Docker Hub](https://hub.docker.com/)
+2. Click "Create Repository"
+3. Set the name to `hello-world-app` (or update the workflow if you prefer a different name)
+4. Make it **Public** or **Private** as preferred
+5. The workflow will automatically push images to `yourusername/hello-world-app`
 
 ### Workflow Triggers
 
